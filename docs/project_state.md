@@ -2,7 +2,7 @@
 
 ## Name
 
-Go Backend Platform
+go-distributed-rate-limiter
 
 ## Goal
 
@@ -101,10 +101,12 @@ Completed
 
 * Go environment setup
 * Docker setup
+* Git repository initialization
+* GitHub integration
+* Feature-based Git workflow
 * First Go module
 * HTTP server
 * ServeMux routing
-* Startup logging
 * `/health`
 * `/`
 * Higher-order functions
@@ -152,6 +154,56 @@ Uses:
 ---
 
 # Engineering Decisions
+
+## Version Control
+
+Repository:
+
+```
+go-distributed-rate-limiter
+```
+
+Default branch:
+
+```
+main
+```
+
+Development workflow:
+
+```
+main
+
+↓
+
+feature/<topic>
+
+↓
+
+Merge into main
+
+↓
+
+Delete feature branch
+```
+
+Commit convention:
+
+```
+feat:
+fix:
+refactor:
+docs:
+test:
+perf:
+chore:
+```
+
+Every feature is developed in its own branch using small, logical commits.
+
+The repository is intended to resemble a production engineering project rather than a learning sandbox.
+
+---
 
 ## Standard library first
 
@@ -229,7 +281,13 @@ until the project complexity justifies them.
 
 # Next Session
 
-Next topic:
+Create:
+
+```
+feature/http-handler
+```
+
+Continue with:
 
 1. http.Handler
 2. ServeHTTP
@@ -240,7 +298,7 @@ Next topic:
 
 Do not revisit middleware fundamentals.
 
-Assume middleware is understood.
+Assume middleware and HTTP request lifecycle are understood.
 
 ---
 

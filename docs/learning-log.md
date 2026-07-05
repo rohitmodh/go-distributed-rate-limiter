@@ -521,6 +521,176 @@ Next topic:
 
 ---
 
+# Day 4
+
+## Topics
+
+* Git initialization
+* GitHub repository
+* Git workflow
+* Commit philosophy
+* Repository organization
+
+---
+
+## Git Repository
+
+Initialized the project as a Git repository.
+
+Repository:
+
+```
+go-distributed-rate-limiter
+```
+
+Configured:
+
+* main branch
+* GitHub remote
+* Upstream tracking
+
+Created the first commit:
+
+```
+feat: bootstrap Go backend with HTTP server and middleware
+```
+
+---
+
+## Git Philosophy
+
+Treat this as a production engineering project rather than a learning repository.
+
+Every commit should represent one logical change.
+
+Commit messages should explain WHAT changed rather than WHEN it changed.
+
+Examples:
+
+```
+feat: add request logging middleware
+
+docs: explain middleware request lifecycle
+
+refactor: simplify middleware composition
+```
+
+Avoid commits like:
+
+```
+changes
+
+day 3
+
+more work
+
+fix
+```
+
+---
+
+## Branch Strategy
+
+Current workflow:
+
+```
+main
+
+↓
+
+feature/http-handler
+
+↓
+
+Merge
+
+↓
+
+Delete feature branch
+```
+
+Every new topic will be developed inside its own feature branch.
+
+Examples:
+
+```
+feature/http-handler
+
+feature/context
+
+feature/worker-pool
+
+feature/redis
+
+feature/token-bucket
+```
+
+---
+
+## Repository Philosophy
+
+The repository should look like an engineering project.
+
+It should demonstrate:
+
+* Clean history
+* Small logical commits
+* Architecture discussions
+* Production-quality documentation
+* Benchmarking
+* Profiling
+* Load testing
+
+rather than simply documenting Go syntax.
+
+---
+
+## Git Lessons
+
+Learned:
+
+Git does not automatically track files.
+
+Files move through:
+
+Working Directory
+
+↓
+
+Staging Area
+
+↓
+
+Repository
+
+A commit represents a logical snapshot of the project.
+
+The staging area allows selecting exactly which changes belong to that snapshot.
+
+---
+
+## Current Repository Status
+
+Repository:
+
+```
+go-distributed-rate-limiter
+```
+
+Current state:
+
+✔ Git initialized
+
+✔ GitHub remote configured
+
+✔ First commit pushed
+
+✔ main tracking origin/main
+
+Project is now ready for feature-based development.
+
+---
+
 # Long-Term Goal
 
 By the end of the project I should comfortably:
