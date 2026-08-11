@@ -1,10 +1,15 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
 	"time"
 )
 
@@ -17,13 +22,52 @@ func main() {
 	mux.Handle("/health", health)
 	mux.Handle("/", home)
 
+	server := &http.Server{
+		Addr:    ":8080",
+		Handler: mux,
+	}
+
+	signalCtx, stop := signal.NotifyContext(
+		context.Background(),
+		os.Interrupt,
+		syscall.SIGTERM,
+	)
+	defer stop()
+
+	if err := runServer(server, signalCtx); err != nil {
+		log.Fatalf("server error: %v", err)
+	}
+}
+
+func runServer(server *http.Server, signalCtx context.Context) error {
+	//
 	log.Println("Starting server on : 8080")
 
-	err := http.ListenAndServe(":8080", mux)
+	serverErrors := make(chan error, 1)
 
-	if err != nil {
-		log.Fatal(err)
+	go func() {
+		serverErrors <- server.ListenAndServe()
+	}()
+
+	select {
+	case err := <-serverErrors:
+		if err != nil && !errors.Is(err, http.ErrServerClosed) {
+			return err
+		}
+	case <-signalCtx.Done():
+		log.Println("Shutdown signal received")
+
+		shutdownCtx, cancel := context.WithTimeout(
+			context.Background(),
+			5*time.Second,
+		)
+		defer cancel()
+		if err := server.Shutdown(shutdownCtx); err != nil {
+			log.Printf("server shutdown error: %v", err)
+			return err
+		}
 	}
+	return nil
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
